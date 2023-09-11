@@ -11,7 +11,7 @@ class TestBooksCollector:
         collector.add_new_book('Приключения Шерлока Холмса')
         collector.add_new_book('Приключения Шерлока Холмса')
 
-        assert len(collector.books_genre) == 1
+        assert len(collector.get_books_genre()) == 1
 
     @pytest.mark.parametrize('name', ['', 'Удивительное путешествие Нильса Хольгерсс'])
     def test_add_new_book_invalid_name_not_added(self, name):
@@ -19,7 +19,7 @@ class TestBooksCollector:
 
         collector.add_new_book(name)
 
-        assert name not in collector.books_genre
+        assert name not in collector.get_books_genre()
 
     def test_set_book_genre_book_in_dict_genre_added(self):
         collector = BooksCollector()
@@ -78,7 +78,7 @@ class TestBooksCollector:
 
         collector.add_book_in_favorites('Маленький принц')
 
-        assert 'Маленький принц' not in collector.favorites
+        assert 'Маленький принц' not in collector.get_list_of_favorites_books()
 
     def test_delete_book_from_favorites_added_book_deleted(self):
         collector = BooksCollector()
@@ -87,7 +87,7 @@ class TestBooksCollector:
         collector.add_book_in_favorites('Приключения Шерлока Холмса')
         collector.delete_book_from_favorites('Приключения Шерлока Холмса')
 
-        assert 'Приключения Шерлока Холмса' not in collector.favorites
+        assert 'Приключения Шерлока Холмса' not in collector.get_list_of_favorites_books()
 
     def test_get_list_of_favorites_books_list_shown(self):
         collector = BooksCollector()
@@ -97,4 +97,4 @@ class TestBooksCollector:
         collector.add_book_in_favorites('Двенадцать стульев')
         collector.add_book_in_favorites('Пигмалион')
 
-        assert collector.favorites == ['Двенадцать стульев', 'Пигмалион']
+        assert collector.get_list_of_favorites_books() == ['Двенадцать стульев', 'Пигмалион']
