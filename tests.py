@@ -32,43 +32,46 @@ class TestBooksCollector:
     def test_get_book_genre_name_in_dict_genre_shown(self):
         collector = BooksCollector()
 
-        collector.books_genre['Сияние'] = 'Ужасы'
+        collector.add_new_book('Сияние')
+        collector.set_book_genre('Сияние', 'Ужасы')
 
         assert collector.get_book_genre('Сияние') == 'Ужасы'
 
     def test_get_books_with_specific_genre_books_shown(self):
         collector = BooksCollector()
 
-        collector.books_genre['Приключения Шерлока Холмса'] = 'Детективы'
-        collector.books_genre['Сияние'] = 'Ужасы'
-        collector.books_genre['Двенадцать стульев'] = 'Комедии'
-        collector.books_genre['Пигмалион'] = 'Комедии'
+        collector.add_new_book('Приключения Шерлока Холмса')
+        collector.add_new_book('Двенадцать стульев')
+        collector.add_new_book('Пигмалион')
+        collector.set_book_genre('Приключения Шерлока Холмса', 'Детективы')
+        collector.set_book_genre('Двенадцать стульев', 'Комедии')
+        collector.set_book_genre('Пигмалион', 'Комедии')
 
         assert collector.get_books_with_specific_genre('Комедии') == ['Двенадцать стульев', 'Пигмалион']
 
     def test_get_books_genre_dict_shown(self):
         collector = BooksCollector()
 
-        collector.books_genre['Приключения Шерлока Холмса'] = 'Детективы'
-        collector.books_genre['Сияние'] = 'Ужасы'
-        collector.books_genre['Двенадцать стульев'] = 'Комедии'
+        collector.add_new_book('Приключения Шерлока Холмса')
+        collector.add_new_book('Двенадцать стульев')
+        collector.set_book_genre('Приключения Шерлока Холмса', 'Детективы')
 
         assert collector.get_books_genre() == {
             'Приключения Шерлока Холмса': 'Детективы',
-            'Сияние': 'Ужасы',
-            'Двенадцать стульев': 'Комедии'
+            'Двенадцать стульев': ''
         }
 
     def test_get_books_for_children_books_shown(self):
         collector = BooksCollector()
 
-        collector.books_genre['Приключения Шерлока Холмса'] = 'Детективы'
-        collector.books_genre['Сияние'] = 'Ужасы'
-        collector.books_genre['Двенадцать стульев'] = 'Комедии'
-        collector.books_genre['Пигмалион'] = 'Комедии'
-        collector.books_genre['Дюна'] = 'Фантастика'
+        collector.add_new_book('Приключения Шерлока Холмса')
+        collector.add_new_book('Пигмалион')
+        collector.add_new_book('Дюна')
+        collector.set_book_genre('Приключения Шерлока Холмса', 'Детективы')
+        collector.set_book_genre('Пигмалион', 'Комедии')
+        collector.set_book_genre('Дюна', 'Фантастика')
 
-        assert collector.get_books_for_children() == ['Двенадцать стульев', 'Пигмалион', 'Дюна']
+        assert collector.get_books_for_children() == ['Пигмалион', 'Дюна']
 
     def test_add_book_in_favorites_not_in_dict_book_not_added(self):
         collector = BooksCollector()
@@ -80,7 +83,7 @@ class TestBooksCollector:
     def test_delete_book_from_favorites_added_book_deleted(self):
         collector = BooksCollector()
 
-        collector.books_genre['Приключения Шерлока Холмса'] = 'Детективы'
+        collector.add_new_book('Приключения Шерлока Холмса')
         collector.add_book_in_favorites('Приключения Шерлока Холмса')
         collector.delete_book_from_favorites('Приключения Шерлока Холмса')
 
@@ -89,8 +92,8 @@ class TestBooksCollector:
     def test_get_list_of_favorites_books_list_shown(self):
         collector = BooksCollector()
 
-        collector.books_genre['Двенадцать стульев'] = 'Комедии'
-        collector.books_genre['Пигмалион'] = 'Комедии'
+        collector.add_new_book('Двенадцать стульев')
+        collector.add_new_book('Пигмалион')
         collector.add_book_in_favorites('Двенадцать стульев')
         collector.add_book_in_favorites('Пигмалион')
 
